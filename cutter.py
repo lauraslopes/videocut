@@ -1,14 +1,32 @@
 import subprocess
+import argparse
 
-# Command and params for ffmpeg
-command = ['ffmpeg',
-           '-i', "/home/laura/supervisionsportclub/records/24-03/XCOUTFY_2024-03-24_12-43-29CAM_280800.avi",
-           '-c:a', 'copy',
-           '-c:v', 'copy',
-           '-ss', '01:03:45',
-           #'-to', '02:08:00',
-           'cuts/teste.avi',
-           ]
 
-# Using subprocess and pipe to fetch frame data
-s = subprocess.Popen(command, stdin=subprocess.PIPE)
+def cut(input, output, start, end):
+    command = ['ffmpeg',
+               '-y',
+               '-i', input,
+               '-c:a', 'copy',
+               '-c:v', 'copy',
+               '-ss', start,
+               ]
+
+    if end:
+        command += '-to', end
+
+    command.append(output)
+
+    print(command)
+
+    s = subprocess.Popen(command, stdin=subprocess.PIPE)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-i', '--input', type=str)
+    parser.add_argument('-o', '--output', default="cuts/output.avi", type=str)
+    parser.add_argument('-s', '--start', default="00:00:00.00", type=str)
+    parser.add_argument('-e', '--end', default=None, type=str)
+    args = parser.parse_args()
+
+    cut(args.input, args.output, args.start, args.end)
