@@ -1,2 +1,2 @@
 # videocut
-Easy and uncomplicated way to cut, append and divide videos using opencv
+Easy and uncomplicated way to cut, append and divide videos using ffmpeg
