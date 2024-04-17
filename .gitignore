@@ -1,3 +1,4 @@
 .idea
 .venv
 cuts
+__pycache__
